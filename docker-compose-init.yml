@@ -11,6 +11,7 @@ services:
     volumes:
       - ./log/nginx:/var/log/nginx
       - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/nginx/sites-enabled:/etc/nginx/sites-enabled
       - ./data/nginx/sites.template:/etc/nginx/sites-available/sites.template
       - ./data/nginx/default/html:/var/www/html
       - ./data/certbot/conf:/etc/letsencrypt
