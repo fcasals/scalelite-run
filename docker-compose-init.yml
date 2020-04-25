@@ -10,15 +10,20 @@ services:
     restart: "no"
     volumes:
       - ./log/nginx:/var/log/nginx
+      - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/nginx/sites.template:/etc/nginx/sites-available/sites.template
+      - ./data/nginx/default/html:/var/www/html
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
       - "443:443"
     environment:
-      - NGINX_HOSTNAME=${URL_HOST}
+      - HOST_NAME=${HOST_NAME:-sl.xlab.blindside-dev.com}
+    depends_on:
+      - scalelite.api
+    command: /bin/bash -c "envsubst '$$HOST_NAME' < /etc/nginx/sites-available/sites.template > /etc/nginx/sites-enabled/sites.conf && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
 
-## Configuration for Letsencrypt SSL Certificate
   certbot:
     image: certbot/certbot
     volumes:
