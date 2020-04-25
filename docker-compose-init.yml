@@ -19,10 +19,8 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - HOST_NAME=${HOST_NAME:-sl.xlab.blindside-dev.com}
-    depends_on:
-      - scalelite.api
-    command: /bin/bash -c "envsubst '$$HOST_NAME' < /etc/nginx/sites-available/sites.template > /etc/nginx/sites-enabled/sites.conf && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
+      - URL_HOST=${URL_HOST:-sl.xlab.blindside-dev.com}
+    command: /bin/bash -c "envsubst '$$URL_HOST' < /etc/nginx/sites-available/sites.template > /etc/nginx/sites-enabled/sites.conf && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
 
   certbot:
     image: certbot/certbot
