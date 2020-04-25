@@ -5,9 +5,10 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-HOST_NAME=$(grep HOST_NAME .env | cut -d '=' -f2)
+URL_HOST=$(grep URL_HOST .env | cut -d '=' -f2)
+echo $URL_HOST
 
-domains=($HOST_NAME)
+domains=($URL_HOST)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="" # Adding a valid address is strongly recommended
