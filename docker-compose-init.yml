@@ -20,7 +20,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - URL_HOST=${URL_HOST:-sl.xlab.blindside-dev.com}
+      - URL_HOST=${URL_HOST}
     command: /bin/bash -c "envsubst '$$URL_HOST' < /etc/nginx/sites-available/sites.template > /etc/nginx/sites-enabled/sites.conf && while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
 
   certbot:
