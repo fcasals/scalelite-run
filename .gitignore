@@ -11,3 +11,5 @@
 
 /scalelite/log*
 /scalelite/tmp*
+
+/tmp*
