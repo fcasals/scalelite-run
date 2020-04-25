@@ -1,0 +1,27 @@
+version: '3'
+
+volumes:
+  database_data:
+    driver: local
+
+services:
+  nginx:
+    image: nginx:latest
+    restart: "no"
+    volumes:
+      - ./log/nginx:/var/log/nginx
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_HOSTNAME=${URL_HOST}
+
+## Configuration for Letsencrypt SSL Certificate
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
