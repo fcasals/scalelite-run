@@ -7,7 +7,7 @@ volumes:
 services:
   nginx:
     image: nginx:latest
-    restart: "no"
+    container_name: nginx
     volumes:
       - ./log/nginx:/var/log/nginx
       - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -24,6 +24,7 @@ services:
 
   certbot:
     image: certbot/certbot
+    container_name: certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
