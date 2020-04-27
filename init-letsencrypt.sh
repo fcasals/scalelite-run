@@ -41,8 +41,8 @@ docker-compose run --rm --entrypoint "\
 echo
 
 
-echo "### Starting nginx ..."
-docker-compose up --force-recreate -d nginx
+echo "### Starting scalelite-nginx ..."
+docker-compose up --force-recreate -d scalelite-nginx
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
@@ -79,5 +79,5 @@ docker-compose run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-echo "### Reloading nginx ..."
-docker-compose exec nginx nginx -s reload
+echo "### Reloading scalelite-nginx ..."
+docker-compose exec scalelite-nginx nginx -s reload
